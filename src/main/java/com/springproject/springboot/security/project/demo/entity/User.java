@@ -14,6 +14,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -55,7 +56,15 @@ public class User implements UserDetails {
     @Size(min = 8, message = "Password must be more than 8 characters")
     private String password;
 
+    
     private String profilePath;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.profilePath == null) {
+            this.profilePath = "/user/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector.jpg";
+        }
+    }
 
     @CreationTimestamp
     private Date created_at;
@@ -104,6 +113,8 @@ public class User implements UserDetails {
 	public String getPassword() {
 		return this.password;
 	}
+
+    
 
     public User orElseThrow(Object object) {
         // TODO Auto-generated method stub

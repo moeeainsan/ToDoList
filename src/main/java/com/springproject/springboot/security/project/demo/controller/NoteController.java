@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springproject.springboot.security.project.demo.entity.Note;
@@ -23,6 +24,8 @@ import com.springproject.springboot.security.project.demo.service.NoteService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+
 
 @RestController
 @RequestMapping("/api/")
@@ -54,11 +57,7 @@ public class NoteController {
     }
 
 
-    // @DeleteMapping("delete/{id}")
-    // public ResponseEntity<String> deleteNote(@PathVariable Integer id) {
-    //   noteRepository.deleteById(id);
-    //   return new ResponseEntity<>("Deleted",HttpStatus.OK);
-    // }
+    
  
 
 
@@ -113,9 +112,22 @@ public class NoteController {
 
     @GetMapping("/{userId}/notesDescInDate")
     public ResponseEntity<List<Note>> retrieveAllNotesInDateDescOrder(@PathVariable Integer userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         List<Note> notes = noteService.findNoteByUserInDateDescOrder(userId);
         return new ResponseEntity<>(notes,HttpStatus.OK);
     }
+
+    @GetMapping("/{userId}/notesPriorityByASC")
+    public ResponseEntity<List<Note>> notePriorityByASC(@PathVariable Integer userId) {
+      List<Note> notes =noteService.findNoteByPriorityASC(userId);
+        return new ResponseEntity<>(notes,HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}/searchKeyword")
+    public ResponseEntity<List<Note>> searching(@RequestParam String keyword , @PathVariable Integer userId) {
+        List<Note> notes =noteService.searchingKeyword(keyword,userId);
+        return new ResponseEntity<>(notes,HttpStatus.OK);
+    }
+    
+    
 }
 

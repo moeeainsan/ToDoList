@@ -4,7 +4,6 @@ import java.util.Date;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -40,7 +39,7 @@ public class Note {
     @NotEmpty(message="Description can not be blank")
     private String description;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated
     private Priority priority;
 
 

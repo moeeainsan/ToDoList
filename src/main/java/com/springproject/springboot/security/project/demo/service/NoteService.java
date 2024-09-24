@@ -37,6 +37,18 @@ public class NoteService {
     public List<Note> findNoteByUserInDateDescOrder(Integer userId) {
         return noteRepository.findAllNoteByUserIdOrderedByDateDesc(userId);
     }
+
+
+    public List<Note> findNoteByPriorityASC(Integer userId) {
+        return noteRepository.findNoteByPriorityASC(userId);
+        
+    }
+
+
+    public List<Note> searchingKeyword(String keyword, Integer userId) {
+        return noteRepository.findNoteBykeyword(keyword,userId);
+        
+    }
 }
     
     

@@ -19,5 +19,17 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
 
 @Query("SELECT n FROM Note n INNER JOIN User u ON n.user.id = u.id WHERE n.user.id = :userId ORDER BY n.created_at DESC")
 List<Note> findAllNoteByUserIdOrderedByDateDesc(@Param("userId") Integer userId);
+
+
+@Query("SELECT n FROM Note n INNER JOIN User u ON n.user.id = u.id WHERE n.user.id = :userId ORDER BY n.priority ASC")
+List<Note> findNoteByPriorityASC(@Param("userId") Integer userId);
+
+
+
+@Query("SELECT DISTINCT n FROM Note n LEFT JOIN n.user u WHERE (LOWER(n.title) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(n.description) LIKE LOWER(CONCAT('%', :keyword, '%'))) AND u.id = :userId ORDER BY n.priority ASC")
+List<Note> findNoteBykeyword(@Param("keyword") String keyword, @Param("userId") Integer userId);
+
+
+
    
 }
